@@ -1,4 +1,0 @@
-# Используйте этот файл, чтобы Gradle 6.5 запускался с Java 11.
-# В терминале выполните: source .envrc.gradle-java
-# Или добавьте в ~/.zshrc для этой папки (direnv): echo 'source .envrc.gradle-java' >> ...
-export JAVA_HOME=/opt/homebrew/opt/openjdk@11
