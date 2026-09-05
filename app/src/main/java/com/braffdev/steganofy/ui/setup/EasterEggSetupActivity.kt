@@ -112,7 +112,7 @@ class EasterEggSetupActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val PREFS_NAME = "pakamat_prefs"
+        const val PREFS_NAME = "parkamat_prefs"
         const val KEY_CONFIGURED = "easter_egg_configured"
         const val KEY_CATEGORY = "easter_egg_category"
         const val KEY_FROM = "easter_egg_from"

@@ -4,7 +4,7 @@ A personal Android app that presents itself as a simple unit converter while hid
 
 ## What it is
 
-Pakamat 17 is a fork that merges two open-source projects:
+Parkamat 17 is a fork that merges two open-source projects:
 
 - **[Steganofy](https://github.com/mstaudt/Steganofy)** — image steganography for Android. Hides arbitrary data (text or files) in the least-significant bits of PNG pixels and can reveal it back. Supports AES-256 encryption.
 - **[UnitConverterUltimate](https://github.com/physphil/UnitConverterUltimate)** — a comprehensive unit converter covering length, mass, temperature, speed, area, volume, time, energy, pressure, power, data storage, cooking, and more. The conversion math is adapted from this project.
@@ -27,7 +27,7 @@ The secret combination is stored locally in SharedPreferences and never leaves t
 ## Language support
 
 The app supports **English** and **Russian**. Language is selected via the system per-app language setting:  
-**Settings → Apps → Pakamat 17 → Language** (Android 13+; AppCompat handles older versions automatically).
+**Settings → Apps → Parkamat 17 → Language** (Android 13+; AppCompat handles older versions automatically).
 
 ## Building
 

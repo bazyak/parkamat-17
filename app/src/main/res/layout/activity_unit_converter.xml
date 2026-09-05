@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/toolbar_background"
         android:elevation="4dp"
         app:titleTextColor="@android:color/white" />
 
@@ -24,7 +24,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Category card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,7 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
 
-            <!-- Units card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,7 +131,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
 
-            <!-- Value card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,7 +164,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
 
-            <!-- Result card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

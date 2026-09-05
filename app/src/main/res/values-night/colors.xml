@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Theme colors -->
-    <color name="colorPrimaryVariant">#000000</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
+    <!-- Акцент в тёмной теме белый: чёрный на тёмном фоне был бы не виден.
+         colorOnPrimary при этом чёрный, иначе заливные кнопки (белый фон)
+         остались бы с белым текстом. -->
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryVariant">#FFFFFF</color>
+    <color name="colorOnPrimary">#000000</color>
     <color name="colorOnPrimaryVariant">#0FFFFFFF</color>
     <color name="textColor">#DDDDDD</color>
     <color name="textColorSecondary">#99DDDDDD</color>
+
+    <color name="light_blue_900">#DDDDDD</color>
+    <color name="light_blue_900_transparent">#11DDDDDD</color>
 </resources>

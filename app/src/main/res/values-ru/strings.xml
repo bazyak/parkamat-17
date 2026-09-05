@@ -96,7 +96,7 @@
     <string name="file_select_image_none">Изображение не выбрано</string>
 
     <!-- About -->
-    <string name="about_title">О приложении Pakamat 17</string>
+    <string name="about_title">О приложении Parkamat 17</string>
     <string name="about_punchline">Простое, быстрое и открытое Android-приложение для стеганографии.</string>
     <string name="about_email">info@braffdev.com</string>
     <string name="about_web">braffdev.com</string>

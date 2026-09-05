@@ -2,7 +2,7 @@
 <!--
   Declares the languages this app supports.
   On Android 13+ this powers the per-app language picker in
-  Settings → Apps → Pakamat 17 → Language.
+  Settings → Apps → Parkamat 17 → Language.
   On Android 12 and below AppCompat handles it via AppLocalesMetadataHolderService.
 -->
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
