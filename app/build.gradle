@@ -4,10 +4,25 @@ plugins {
     id 'com.google.android.gms.oss-licenses-plugin'
 }
 
-def gitCount = { ->
-    try { return 'git rev-list --count HEAD'.execute(null, rootDir).text.trim().toInteger() }
-    catch (ignored) { return 1 }
-}()
+def versionPropsFile = file('version.properties')
+def versionProps = new Properties()
+if (versionPropsFile.exists()) {
+    versionPropsFile.withInputStream { versionProps.load(it) }
+}
+def buildNumber = (versionProps['BUILD_NUMBER'] ?: '0').toInteger()
+
+// Инкрементим только при реальной сборке.
+// Sync в Студии не запускает задачи, поэтому номер от него не растёт.
+def isRealBuild = gradle.startParameter.taskNames.any { name ->
+    def n = name.toLowerCase()
+    n.contains('assemble') || n.contains('bundle') || n.contains('install')
+}
+
+if (isRealBuild) {
+    buildNumber++
+    versionProps['BUILD_NUMBER'] = buildNumber.toString()
+    versionPropsFile.withOutputStream { versionProps.store(it, 'Auto-incremented on each build') }
+}
 
 android {
     compileSdk 34
@@ -17,8 +32,8 @@ android {
         applicationId "com.bazyak.parkamat17"
         minSdkVersion 24
         targetSdk 34
-        versionCode gitCount
-        versionName "1.0.$gitCount"
+        versionCode buildNumber
+        versionName "1.0.$buildNumber"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
