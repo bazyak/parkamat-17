@@ -7,6 +7,7 @@ import android.text.Editable
 import android.view.MenuItem
 import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.RevealWizardActivityBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import com.braffdev.steganofy.ui.common.TextWatcherAdapter
 import com.braffdev.steganofy.ui.common.VisibilityUtils
 import com.braffdev.steganofy.ui.common.file.picker.FilePickedListener
@@ -29,6 +30,7 @@ class RevealWizardActivity : AppCompatActivity(), AndroidScopeComponent {
 
         binding = RevealWizardActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
         setSupportActionBar(binding.toolbar)
         setTitle(R.string.main_reveal)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_close_24)

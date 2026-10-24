@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.braffdev.steganofy">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--
+      Нужно, чтобы читать выбранный файл напрямую из MediaStore: Photo Picker отдаёт
+      собственный uri вида content://media/picker/..., за которым стоит его база со снимком
+      файла. Имя там своё (6621.png вместо Screenshot_...), а содержимое может оказаться тем,
+      что было до перезаписи. По обычному media-uri файл читается с диска.
+    -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <queries>
         <intent>
@@ -56,7 +61,8 @@
         <activity
             android:name=".ui.converter.UnitConverterActivity"
             android:exported="true"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -73,7 +79,8 @@
         <activity
             android:name=".ui.reveal.wizard.RevealWizardActivity"
             android:exported="false"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
@@ -91,7 +98,8 @@
         <activity
             android:name=".ui.hide.wizard.HideWizardActivity"
             android:exported="false"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />

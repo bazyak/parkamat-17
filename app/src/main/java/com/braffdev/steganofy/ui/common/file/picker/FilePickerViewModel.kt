@@ -3,8 +3,6 @@ package com.braffdev.steganofy.ui.common.file.picker
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
@@ -26,22 +24,18 @@ class FilePickerViewModel(val applicationContext: Context, val fileService: File
     }
 
     fun selectFileClicked() {
-        val isImage = mimeType.startsWith("image")
+        if (mimeType.startsWith("image")) {
+            // Photo Picker всегда стартует в галерее и не помнит последний путь. Запускаем
+            // его напрямую: это системный компонент, и обёртка в chooser может увести выбор
+            // в стороннюю галерею, которая отдаёт файл из собственного кэша.
+            liveDataIntent.value = Intent(MediaStore.ACTION_PICK_IMAGES)
+            return
+        }
 
-        val pickIntent = if (isImage && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Android 13+: Photo Picker — всегда стартует в галерее, не помнит последний путь
-            Intent(MediaStore.ACTION_PICK_IMAGES)
-        } else {
-            Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = mimeType
-                if (isImage && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    putExtra(
-                        DocumentsContract.EXTRA_INITIAL_URI,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    )
-                }
-            }
+        // Файлы произвольного типа Photo Picker не показывает, их берём через SAF.
+        val pickIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = mimeType
         }
 
         liveDataIntent.value = Intent.createChooser(pickIntent, applicationContext.getString(pickerTextRes))

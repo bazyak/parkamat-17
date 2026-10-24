@@ -25,13 +25,13 @@ if (isRealBuild) {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace "com.braffdev.steganofy"
 
     defaultConfig {
         applicationId "com.bazyak.parkamat17"
-        minSdkVersion 24
-        targetSdk 34
+        minSdk 35
+        targetSdk 35
         versionCode buildNumber
         versionName "1.0.$buildNumber"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

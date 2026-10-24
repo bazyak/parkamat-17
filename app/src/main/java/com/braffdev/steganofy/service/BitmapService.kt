@@ -1,9 +1,12 @@
 package com.braffdev.steganofy.service
 
+import android.content.ContentUris
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 
@@ -16,8 +19,47 @@ class BitmapService(private val applicationContext: Context) {
      * @return the decoded bitmap
      */
     fun decodeBitmap(uri: Uri): Bitmap {
-        val stream = applicationContext.contentResolver.openInputStream(uri)
-        return stream.use { BitmapFactory.decodeStream(stream) }
+        val raw = readBytes(uri)
+        return BitmapFactory.decodeByteArray(raw, 0, raw.size)
+    }
+
+    /**
+     * Читает файл, стараясь обойти слой Photo Picker: за его uri стоит собственная база,
+     * которая может держать содержимое, снятое до того, как файл перезаписали. Тот же файл
+     * доступен напрямую через MediaStore, и оттуда он читается с диска.
+     *
+     * @param uri uri выбранного файла
+     * @return содержимое файла
+     */
+    private fun readBytes(uri: Uri): ByteArray {
+        val mediaStoreUri = toMediaStoreUri(uri)
+        if (mediaStoreUri != null) {
+            try {
+                return applicationContext.contentResolver.openInputStream(mediaStoreUri)!!
+                    .use { it.readBytes() }
+            } catch (e: Exception) {
+                // Нет разрешения или запись не нашлась — читаем так, как отдал пикер.
+                Log.w("BitmapService", "MediaStore read failed for $mediaStoreUri, falling back", e)
+            }
+        }
+
+        return applicationContext.contentResolver.openInputStream(uri)!!.use { it.readBytes() }
+    }
+
+    /**
+     * Превращает uri от Photo Picker в обычный media-uri. Идентификатор записи у них общий,
+     * он стоит последним сегментом пути.
+     *
+     * @param uri uri для преобразования
+     * @return media-uri, либо null, если это uri другого происхождения
+     */
+    private fun toMediaStoreUri(uri: Uri): Uri? {
+        if (uri.authority != MediaStore.AUTHORITY || uri.pathSegments.firstOrNull() != "picker") {
+            return null
+        }
+
+        val id = uri.lastPathSegment?.toLongOrNull() ?: return null
+        return ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
     }
 
     /**

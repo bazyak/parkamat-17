@@ -68,7 +68,7 @@
     <string name="hide_failed">Failed to hide the data due to an unknown error</string>
     <string name="hide_statistics_bytes">%1$s of data were successfully hidden</string>
     <string name="hide_statistics_hide_time">Data hiding</string>
-    <string name="hide_image_too_simple_content">The image is too uniform to store the data reliably. Please choose an image with more detail or a larger image.</string>
+    <string name="hide_image_too_simple_content">The data could not be hidden reliably in this image. The cause is transparency or a too uniform background. Please choose another image, preferably larger and without transparent areas.</string>
 
     <!-- Reveal -->
     <string name="reveal_file">File:</string>
@@ -91,6 +91,7 @@
     <string name="file_select">Select a file</string>
     <string name="file_info">%1$s, %2$s</string>
     <string name="file_saved">File successfully saved</string>
+    <string name="file_save_name_required">File name can not be empty</string>
     <string name="file_share">Share</string>
     <string name="file_select_none">No file selected</string>
     <string name="file_select_image_none">No image selected</string>

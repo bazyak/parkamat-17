@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.HideActivityBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import com.braffdev.steganofy.ui.common.OperationStatus
 import com.braffdev.steganofy.ui.common.progress.ProgressErrorFragment
 import com.braffdev.steganofy.ui.common.progress.ProgressRunningFragment
@@ -25,6 +26,7 @@ class HideActivity : AppCompatActivity(), AndroidScopeComponent {
         super.onCreate(savedInstanceState)
         binding = HideActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

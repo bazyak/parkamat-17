@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.ActivityEasterEggSetupBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import com.braffdev.steganofy.ui.converter.ConversionEngine
 import com.braffdev.steganofy.ui.converter.UnitConverterActivity
 
@@ -26,6 +27,7 @@ class EasterEggSetupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEasterEggSetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
 
         setupCategorySpinner()
         setupUnitSpinners()

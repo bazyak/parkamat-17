@@ -3,7 +3,8 @@
     <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/colorOnPrimary</item>
+        <!-- Цвет под строкой состояния задаёт фон окна: с Android 15 задать его отдельно
+             уже нельзя. Здесь остаётся только цвет самих значков. -->
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Primary brand color. -->

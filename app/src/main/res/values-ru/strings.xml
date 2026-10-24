@@ -68,7 +68,7 @@
     <string name="hide_failed">Не удалось скрыть данные из-за неизвестной ошибки</string>
     <string name="hide_statistics_bytes">%1$s данных успешно скрыто</string>
     <string name="hide_statistics_hide_time">Скрытие данных</string>
-    <string name="hide_image_too_simple_content">Изображение слишком однородное для надёжного хранения данных. Выберите изображение с большим количеством деталей или большего размера.</string>
+    <string name="hide_image_too_simple_content">Не удалось надёжно спрятать данные в этом изображении. Причина — прозрачность или слишком однородный фон. Выберите другое изображение, лучше покрупнее и без прозрачных областей.</string>
 
     <!-- Reveal -->
     <string name="reveal_file">Файл:</string>
@@ -91,6 +91,7 @@
     <string name="file_select">Выбрать файл</string>
     <string name="file_info">%1$s, %2$s</string>
     <string name="file_saved">Файл успешно сохранён</string>
+    <string name="file_save_name_required">Имя файла не может быть пустым</string>
     <string name="file_share">Поделиться</string>
     <string name="file_select_none">Файл не выбран</string>
     <string name="file_select_image_none">Изображение не выбрано</string>

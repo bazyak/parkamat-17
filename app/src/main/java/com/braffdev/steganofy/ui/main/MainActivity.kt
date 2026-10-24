@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.braffdev.steganofy.databinding.MainActivityBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityScope
 import org.koin.core.scope.Scope
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity(), AndroidScopeComponent {
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

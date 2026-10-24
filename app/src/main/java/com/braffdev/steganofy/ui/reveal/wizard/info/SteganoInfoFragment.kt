@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.os.Build
 import androidx.fragment.app.Fragment
 import com.braffdev.steganofy.databinding.SteganoInfoFragmentBinding
 import com.braffdev.steganofy.lib.domain.SteganoInfo
@@ -31,12 +30,7 @@ class SteganoInfoFragment : Fragment() {
     }
 
     private fun getSteganoInfo(): SteganoInfo {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getSerializable(EXTRA_STEGANO_INFO, SteganoInfo::class.java)!!
-        } else {
-            @Suppress("DEPRECATION")
-            requireArguments().getSerializable(EXTRA_STEGANO_INFO) as SteganoInfo
-        }
+        return requireArguments().getSerializable(EXTRA_STEGANO_INFO, SteganoInfo::class.java)!!
     }
 
     companion object {

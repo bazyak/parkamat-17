@@ -1,18 +1,16 @@
 package com.braffdev.steganofy.ui.common.file.saver
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
+import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.FileSaverFragmentBinding
 import org.koin.android.ext.android.inject
 
@@ -25,14 +23,18 @@ class FileSaverFragment : Fragment() {
     private val saveFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK && result.data?.data != null) {
             val uri = result.data!!.data!!
+
+            // Имя проверяем только здесь: диалог сохранения системный, помешать ему создать
+            // файл с пустым именем нельзя. Убираем пустышку и остаёмся на экране, чтобы
+            // пользователь нажал кнопку снова и ввёл нормальное имя.
+            if (viewModel.isFileNameMissing(uri)) {
+                viewModel.discardFile(uri)
+                Toast.makeText(requireContext(), R.string.file_save_name_required, Toast.LENGTH_LONG).show()
+                return@registerForActivityResult
+            }
+
             viewModel.onFileUriChanged(uri)
             listener.onFileSaved(uri)
-        }
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (isGranted) {
-            viewModel.saveFileClicked()
         }
     }
 
@@ -48,26 +50,13 @@ class FileSaverFragment : Fragment() {
         viewModel.liveDataIntent.observe(this) { startActivity(it) }
 
         binding.buttonShareFile.setOnClickListener { viewModel.shareFileClicked() }
-        binding.buttonSaveFile.setOnClickListener {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q &&
-                ContextCompat.checkSelfPermission(requireContext(), WRITE_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED
-            ) {
-                requestPermissionLauncher.launch(WRITE_EXTERNAL_STORAGE)
-            } else {
-                viewModel.saveFileClicked()
-            }
-        }
+        binding.buttonSaveFile.setOnClickListener { viewModel.saveFileClicked() }
 
         binding.buttonSaveFile.setText(getButtonTextRes())
     }
 
     private fun getTemporaryFileUri(): Uri {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requireArguments().getParcelable(EXTRA_TEMPORARY_FILE_URI, Uri::class.java)!!
-        } else {
-            @Suppress("DEPRECATION")
-            requireArguments().getParcelable(EXTRA_TEMPORARY_FILE_URI)!!
-        }
+        return requireArguments().getParcelable(EXTRA_TEMPORARY_FILE_URI, Uri::class.java)!!
     }
 
     private fun getButtonTextRes(): Int {

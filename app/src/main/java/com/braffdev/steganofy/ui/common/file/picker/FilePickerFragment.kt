@@ -1,12 +1,15 @@
 package com.braffdev.steganofy.ui.common.file.picker
 
+import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.FilePickerFragmentBinding
@@ -26,6 +29,12 @@ class FilePickerFragment : Fragment() {
         }
     }
 
+    // Отказ не блокирует выбор: без разрешения файл будет прочитан так, как его отдаёт
+    // Photo Picker, то есть ровно как до этой правки.
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        viewModel.selectFileClicked()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FilePickerFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,7 +50,13 @@ class FilePickerFragment : Fragment() {
             binding.textViewFileInfo.text = it
         }
 
-        binding.selectFile.setOnClickListener { viewModel.selectFileClicked() }
+        binding.selectFile.setOnClickListener {
+            if (needsMediaImagesPermission()) {
+                requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
+            } else {
+                viewModel.selectFileClicked()
+            }
+        }
         binding.selectFile.setText(getPickerTextRes())
         binding.textViewFileName.setText(getNothingSelectedTextRes())
     }
@@ -56,6 +71,19 @@ class FilePickerFragment : Fragment() {
 
     private fun getNothingSelectedTextRes(): Int {
         return requireArguments().getInt(EXTRA_NOTHING_SELECTED_TEXT_RES)
+    }
+
+    /**
+     * Доступ к медиатеке нужен, чтобы прочитать выбранную картинку напрямую из MediaStore,
+     * минуя базу Photo Picker с её устаревшим содержимым.
+     */
+    private fun needsMediaImagesPermission(): Boolean {
+        if (!getMimeType().startsWith("image")) {
+            return false
+        }
+
+        return ContextCompat.checkSelfPermission(requireContext(), READ_MEDIA_IMAGES) !=
+            PackageManager.PERMISSION_GRANTED
     }
 
     companion object {

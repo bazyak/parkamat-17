@@ -6,6 +6,7 @@ import android.view.MenuItem
 import com.braffdev.steganofy.R
 import androidx.appcompat.app.AppCompatActivity
 import com.braffdev.steganofy.databinding.HideWizardActivityBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import org.koin.android.scope.AndroidScopeComponent
 import org.koin.androidx.scope.activityScope
 import org.koin.core.scope.Scope
@@ -21,6 +22,7 @@ class HideWizardActivity : AppCompatActivity(), AndroidScopeComponent {
 
         binding = HideWizardActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
         setSupportActionBar(binding.toolbar)
         setTitle(R.string.main_hide)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_close_24)

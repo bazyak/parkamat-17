@@ -3,11 +3,11 @@ package com.braffdev.steganofy.ui.reveal
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.RevealActivityBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import com.braffdev.steganofy.ui.common.OperationStatus
 import com.braffdev.steganofy.ui.common.progress.ProgressErrorFragment
 import com.braffdev.steganofy.ui.common.progress.ProgressRunningFragment
@@ -28,6 +28,7 @@ class RevealActivity : AppCompatActivity(), AndroidScopeComponent {
 
         binding = RevealActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -83,12 +84,7 @@ class RevealActivity : AppCompatActivity(), AndroidScopeComponent {
         }
 
         fun getImageUri(intent: Intent): Uri {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                intent.getParcelableExtra(EXTRA_IMAGE_URI, Uri::class.java)!!
-            } else {
-                @Suppress("DEPRECATION")
-                intent.getParcelableExtra(EXTRA_IMAGE_URI)!!
-            }
+            return intent.getParcelableExtra(EXTRA_IMAGE_URI, Uri::class.java)!!
         }
 
         fun getDecryptionPassword(intent: Intent): CharArray? {

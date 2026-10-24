@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.braffdev.steganofy.R
 import com.braffdev.steganofy.databinding.ActivityUnitConverterBinding
+import com.braffdev.steganofy.ui.common.applyWindowInsetsAsPadding
 import com.braffdev.steganofy.ui.main.MainActivity
 import com.braffdev.steganofy.ui.setup.EasterEggSetupActivity
 
@@ -38,6 +39,7 @@ class UnitConverterActivity : AppCompatActivity() {
 
         binding = ActivityUnitConverterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.root.applyWindowInsetsAsPadding()
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.app_name)
 
